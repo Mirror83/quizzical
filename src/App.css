@@ -1,38 +1,93 @@
 .App {
+  position: relative;
   text-align: center;
+  margin: auto;
+  height: 550px;
+  width: 550px;
+  color: black;
+  background: #f5f7fb;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.App::before {
+  position: absolute;
+  left: 180px;
+  top: 20px;
+  width: 200px;
+  height: 200px;
+  content: "";
+  background-image: url("./logo.svg");
+  background-repeat: no-repeat;
+  opacity: 0.1;
+  animation: rotate 10s linear 0s infinite forwards;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
+@keyframes rotate {
   from {
-    transform: rotate(0deg);
+    rotate: 0deg;
   }
   to {
-    transform: rotate(360deg);
+    rotate: 360deg;
   }
+}
+
+.top-blob {
+  position: absolute;
+  right: 0px;
+}
+
+.bottom-blob {
+  position: absolute;
+  rotate: 180deg;
+  bottom: 0px;
+  left: 0px;
+}
+
+.content-container {
+  border: 1px solid black;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 100%;
+}
+
+.title {
+  margin-bottom: 12px;
+}
+.description {
+  margin-top: 0px;
+  margin-bottom: 30px;
+}
+
+.start-quiz {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  padding: 10px;
+  width: 150px;
+  height: 25px;
+  color: white;
+  border-radius: 10px;
+
+  transition: box-shadow 0.5s ease-in;
+  transition: background-color 0.5 ease-in;
+  transition: animation 0.5s ease-out;
+  animation: change alternate infinite 3s ease;
+}
+
+@keyframes change {
+  from {
+    background-color: rgb(82, 177, 209);
+  }
+  to {
+    background-color: tan;
+  }
+}
+
+.start-quiz:hover {
+  animation: none;
+  box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.2);
+  background: rgb(151, 3, 151);
 }
