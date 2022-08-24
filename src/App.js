@@ -9,11 +9,11 @@ import logo from "./logo.svg";
 import blob from "./blob.svg";
 import blob2 from "./blob2.svg";
 
-// TO DO: Refactor the code into seperate components
-
 function App() {
   const [quizStarted, setQuizStarted] = React.useState(false);
   const [questions, setQuestions] = React.useState(Questions);
+  const [quizDone, setQuizDone] = React.useState(false);
+  const [correctCount, setCorrectCount] = React.useState(0);
 
   const questionsAndChoices = questions.map((quiz) => (
     <Question
@@ -22,6 +22,7 @@ function App() {
       quiz={quiz}
       selectedChoice={quiz.selectedChoice}
       selectChoice={selectChoice}
+      quizDone={quizDone}
     />
   ));
 
@@ -39,10 +40,13 @@ function App() {
         if (quiz.question === questionId) {
           return {
             ...quiz,
-            selectedChoice: choiceId,
+            selectedChoice: quiz.choices[choiceId - 1].chosen ? null : choiceId,
             choices: quiz.choices.map((choice) => {
               if (choice.id === choiceId) {
-                return { ...choice, chosen: true };
+                return {
+                  ...choice,
+                  chosen: !quiz.choices[choiceId - 1].chosen,
+                };
               } else {
                 return { ...choice, chosen: false };
               }
@@ -56,11 +60,44 @@ function App() {
     console.log(selected.question, selected.choices[choiceId - 1]);
   }
 
+  function checkAnswers() {
+    setQuestions((prevQuestions) =>
+      prevQuestions.map((prevQuestion) => {
+        if (prevQuestion.selectedChoice === null) {
+          return prevQuestion;
+        } else if (
+          prevQuestion.choices[prevQuestion.selectedChoice - 1].choice ===
+          prevQuestion.answer
+        ) {
+          setCorrectCount((prevCount) => prevCount + 1);
+          return { ...prevQuestion, correctlyAnswered: true };
+        } else return prevQuestion;
+      })
+    );
+
+    setQuizDone(true);
+  }
+
+  function playAgain() {
+    setQuestions(Questions);
+    setQuizDone(false);
+    setCorrectCount(0);
+  }
+
   if (quizStarted) {
     return (
       <div className="App">
         <div className="questions">{questionsAndChoices}</div>
-        <div className="check-answers">Check answers</div>
+        {quizDone &&
+          `You have answered ${Math.floor(
+            correctCount / 2
+          )}/5 questions correctly`}
+        <div
+          className="check-answers"
+          onClick={quizDone ? playAgain : checkAnswers}
+        >
+          {quizDone ? "Play again" : "Check answers"}
+        </div>
       </div>
     );
   } else {

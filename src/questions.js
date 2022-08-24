@@ -9,6 +9,7 @@ const Questions = [
     ],
     answer: "Adios",
     selectedChoice: null,
+    correctlyAnswered: false,
   },
   {
     question:
@@ -21,6 +22,7 @@ const Questions = [
     ],
     answer: "Care Bears",
     selectedChoice: null,
+    correctlyAnswered: false,
   },
   {
     question: "What is the hottest planet in our Solar System?",
@@ -32,6 +34,7 @@ const Questions = [
     ],
     answer: "Venus",
     selectedChoice: null,
+    correctlyAnswered: false,
   },
   {
     question: "In which country was Ceaser salad invented?",
@@ -43,6 +46,7 @@ const Questions = [
     ],
     answer: "Mexico",
     selectedChoice: null,
+    correctlyAnswered: false,
   },
   {
     question: "How Many Hearts Does An Octopus Have?",
@@ -54,6 +58,7 @@ const Questions = [
     ],
     answer: "Three",
     selectedChoice: null,
+    correctlyAnswered: false,
   },
 ];
 

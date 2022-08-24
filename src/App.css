@@ -159,3 +159,27 @@
   border-radius: 10px;
   background-color: rgb(165, 44, 165);
 }
+
+.check-answers:hover {
+  cursor: pointer;
+}
+
+.choice.correct {
+  background-color: rgb(59, 194, 59);
+  color: white;
+  border: none;
+}
+
+.wrong {
+  background-color: red;
+  color: white;
+  opacity: 0.3;
+  border: none;
+}
+
+.not-chosen {
+  background-color: grey;
+  opacity: 0.3;
+  border: none;
+  color: white;
+}
