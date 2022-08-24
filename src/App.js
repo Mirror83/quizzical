@@ -1,6 +1,7 @@
 import React from "react";
 
 import Questions from "./questions";
+import Question from "./Question";
 
 import "./App.css";
 
@@ -8,22 +9,51 @@ import logo from "./logo.svg";
 import blob from "./blob.svg";
 import blob2 from "./blob2.svg";
 
+// TO DO: Refactor the code into seperate components
+
 function App() {
   const [quizStarted, setQuizStarted] = React.useState(false);
+  const [questions, setQuestions] = React.useState(Questions);
 
-  const questionsAndChoices = Questions.map((quiz) => (
-    <div className="quiz">
-      <div className="question">{quiz.question}</div>
-      <div className="choices">
-        {quiz.choices.map((choice) => (
-          <div className="choice">{choice}</div>
-        ))}
-      </div>
-    </div>
+  const questionsAndChoices = questions.map((quiz) => (
+    <Question
+      key={quiz.question}
+      id={quiz.question}
+      quiz={quiz}
+      selectedChoice={quiz.selectedChoice}
+      selectChoice={selectChoice}
+    />
   ));
 
   function startQuiz() {
     setQuizStarted(true);
+  }
+
+  function selectChoice(questionId, choiceId) {
+    const selected = questions.find(
+      (question) => question.question === questionId
+    );
+
+    setQuestions((prevQuestions) =>
+      prevQuestions.map((quiz) => {
+        if (quiz.question === questionId) {
+          return {
+            ...quiz,
+            selectedChoice: choiceId,
+            choices: quiz.choices.map((choice) => {
+              if (choice.id === choiceId) {
+                return { ...choice, chosen: true };
+              } else {
+                return { ...choice, chosen: false };
+              }
+            }),
+          };
+        } else {
+          return quiz;
+        }
+      })
+    );
+    console.log(selected.question, selected.choices[choiceId - 1]);
   }
 
   if (quizStarted) {
@@ -34,6 +64,7 @@ function App() {
       </div>
     );
   } else {
+    // Welcome Page
     return (
       <div className="App">
         <img className="top-blob" src={blob} alt="blob"></img>

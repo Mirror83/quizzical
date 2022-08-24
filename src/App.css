@@ -129,13 +129,20 @@
   font-size: 0.8rem;
   margin-right: 10px;
   border: 1px solid black;
-  border-radius: 5px;
+  border-radius: 7px;
   margin-top: 10px;
   margin-bottom: 10px;
+  transition: 0.5s ease-in;
 }
 
 .choice:hover {
   cursor: pointer;
+}
+
+.chosen {
+  background: blue;
+  border: none;
+  color: white;
 }
 
 .check-answers {
