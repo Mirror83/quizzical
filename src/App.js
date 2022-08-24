@@ -9,6 +9,8 @@ import logo from "./logo.svg";
 import blob from "./blob.svg";
 import blob2 from "./blob2.svg";
 
+// TO DO: Now integrate the app with the OTDB API
+
 function App() {
   const [quizStarted, setQuizStarted] = React.useState(false);
   const [questions, setQuestions] = React.useState(Questions);
