@@ -2,32 +2,11 @@
   position: relative;
   text-align: center;
   margin: auto;
+  margin-top: 50px;
   height: 550px;
   width: 550px;
   color: black;
   background: #f5f7fb;
-}
-
-.App::before {
-  position: absolute;
-  left: 180px;
-  top: 20px;
-  width: 200px;
-  height: 200px;
-  content: "";
-  background-image: url("./logo.svg");
-  background-repeat: no-repeat;
-  opacity: 0.1;
-  animation: rotate 10s linear 0s infinite forwards;
-}
-
-@keyframes rotate {
-  from {
-    rotate: 0deg;
-  }
-  to {
-    rotate: 360deg;
-  }
 }
 
 .top-blob {
@@ -39,7 +18,7 @@
   position: absolute;
   rotate: 180deg;
   bottom: 0px;
-  left: 0px;
+  left: 2px;
 }
 
 .content-container {
@@ -51,6 +30,24 @@
   flex-direction: column;
   flex-wrap: wrap;
   height: 100%;
+}
+
+.logo {
+  position: absolute;
+  top: 80px;
+  height: 15vmin;
+  animation: rotate 10s infinite linear;
+  border: none;
+  opacity: 0.3;
+}
+
+@keyframes rotate {
+  from {
+    rotate: 0deg;
+  }
+  to {
+    rotate: 360deg;
+  }
 }
 
 .title {
@@ -74,7 +71,7 @@
   transition: box-shadow 0.5s ease-in;
   transition: background-color 0.5 ease-in;
   transition: animation 0.5s ease-out;
-  animation: change alternate infinite 3s ease;
+  animation: change alternate infinite 6s ease;
 }
 
 @keyframes change {
@@ -82,12 +79,76 @@
     background-color: rgb(82, 177, 209);
   }
   to {
-    background-color: tan;
+    background-color: rgb(240, 204, 158);
   }
 }
 
 .start-quiz:hover {
   animation: none;
   box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.2);
-  background: rgb(151, 3, 151);
+  background: rgb(199, 15, 199);
+  cursor: pointer;
+}
+
+.start-quiz:active {
+  box-shadow: inset 10px 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.questions {
+  padding-top: 15px;
+  margin-left: 50px;
+  margin-right: 70px;
+}
+
+.quiz {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  border-bottom: 1px solid rgb(65, 62, 62, 0.3);
+}
+
+.question {
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-align: left;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+  font-size: 1rem;
+  margin-bottom: 0px;
+}
+
+.choices {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+}
+
+.choice {
+  padding: 5px;
+  font-size: 0.8rem;
+  margin-right: 10px;
+  border: 1px solid black;
+  border-radius: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.choice:hover {
+  cursor: pointer;
+}
+
+.check-answers {
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  padding: 10px;
+  width: 120px;
+  height: 20px;
+  color: white;
+  border-radius: 10px;
+  background-color: rgb(165, 44, 165);
 }
