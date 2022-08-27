@@ -1,6 +1,5 @@
 import React from "react";
 
-import Questions from "./questions";
 import Question from "./Question";
 
 import "./App.css";
@@ -9,13 +8,16 @@ import logo from "./logo.svg";
 import blob from "./blob.svg";
 import blob2 from "./blob2.svg";
 
-// TO DO: Now integrate the app with the OTDB API
+// TO DO:
+// Randomize the order of the choices
+// so that the answers are not at the same position each time
 
 function App() {
   const [quizStarted, setQuizStarted] = React.useState(false);
   const [questions, setQuestions] = React.useState([]);
   const [quizDone, setQuizDone] = React.useState(false);
   const [correctCount, setCorrectCount] = React.useState(0);
+  const [questionsReady, setQuestionsReady] = React.useState(false);
 
   React.useEffect(() => {
     if (!quizDone) {
@@ -32,11 +34,17 @@ function App() {
       const resultsArray = data.results;
       console.log(resultsArray);
       const questionsArray = resultsArray.map((result) => {
-        const choices = [...result.incorrect_answers, result.correct_answer];
+        const choices = [
+          ...result.incorrect_answers,
+          result.correct_answer,
+        ].sort();
         const shiftedChoices = [];
         for (let i = 0; i < 4; i++) {
           shiftedChoices.push({ id: i + 1, chosen: false, choice: choices[i] });
         }
+
+        setQuestionsReady(true);
+
         return {
           question: result.question,
           answer: result.correct_answer,
@@ -117,29 +125,42 @@ function App() {
   }
 
   function playAgain() {
-    setQuestions(Questions);
+    setQuestions([]);
+    setQuestionsReady(false);
     setQuizDone(false);
     setCorrectCount(0);
   }
 
   if (quizStarted) {
-    return (
-      <div className="App">
-        <div className="questions">{questionsAndChoices}</div>
-        <div className="outcome">
-          {quizDone &&
-            `You have answered ${Math.floor(
-              correctCount / 2
-            )}/5 questions correctly`}
-        </div>{" "}
-        <div
-          className="check-answers"
-          onClick={quizDone ? playAgain : checkAnswers}
-        >
-          {quizDone ? "Play again" : "Check answers"}
+    if (!questionsReady) {
+      return (
+        <div className="App">
+          <img className="top-blob" src={blob} alt="blob"></img>
+          <div className="content-container">
+            <img className="logo faster" src={logo} alt="React logo"></img>
+            <h1 className="loading">Loading questions...</h1>
+          </div>
+          <img className="bottom-blob" src={blob2} alt="blob"></img>
         </div>
-      </div>
-    );
+      );
+    } else
+      return (
+        <div className="App">
+          <div className="questions">{questionsAndChoices}</div>
+          <div className="outcome">
+            {quizDone &&
+              `You have answered ${Math.floor(
+                correctCount / 2
+              )}/5 questions correctly`}
+          </div>{" "}
+          <div
+            className="check-answers"
+            onClick={quizDone ? playAgain : checkAnswers}
+          >
+            {quizDone ? "Play again" : "Check answers"}
+          </div>
+        </div>
+      );
   } else {
     // Welcome Page
     return (

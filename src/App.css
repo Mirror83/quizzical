@@ -98,9 +98,10 @@
 }
 
 .questions {
+  padding-left: 30px;
+  padding-right: 30px;
   padding-top: 25px;
-  margin-left: 50px;
-  margin-right: 70px;
+  transition: all ease-in 1s;
 }
 
 .quiz {
@@ -193,4 +194,37 @@
   margin-bottom: 0px;
   font-weight: bold;
   font-style: italic;
+}
+
+.loading {
+  animation: text-color infinite alternate 2s;
+}
+
+@keyframes text-color {
+  0% {
+    color: black;
+  }
+  30% {
+    color: lightblue;
+  }
+  50% {
+    color: rgb(240, 204, 158);
+  }
+  to {
+    color: rgb(82, 177, 209);
+  }
+}
+
+.faster {
+  animation: faster-spin 2s infinite ease alternate;
+}
+@keyframes faster-spin {
+  from {
+    opacity: 0.1;
+    rotate: 0deg;
+  }
+  to {
+    opacity: 0.5;
+    rotate: 360deg;
+  }
 }
