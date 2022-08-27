@@ -2,9 +2,13 @@
   position: relative;
   text-align: center;
   margin: auto;
-  margin-top: 50px;
-  height: 550px;
-  width: 550px;
+  margin-top: 20px;
+  padding: 20px;
+  padding-top: 0px;
+  min-height: 600px;
+  max-height: max-content;
+  min-width: min-content;
+  max-width: 600px;
   color: black;
   background: #f5f7fb;
 }
@@ -22,14 +26,13 @@
 }
 
 .content-container {
-  border: 1px solid black;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   flex-wrap: wrap;
-  height: 100%;
+  height: 600px;
 }
 
 .logo {
@@ -95,7 +98,7 @@
 }
 
 .questions {
-  padding-top: 15px;
+  padding-top: 25px;
   margin-left: 50px;
   margin-right: 70px;
 }
@@ -146,7 +149,8 @@
 }
 
 .check-answers {
-  margin-top: 10px;
+  margin-top: 20px;
+  margin-bottom: 30px;
   margin-left: auto;
   margin-right: auto;
   display: flex;
@@ -182,4 +186,11 @@
   opacity: 0.3;
   border: none;
   color: white;
+}
+
+.outcome {
+  margin-top: 10px;
+  margin-bottom: 0px;
+  font-weight: bold;
+  font-style: italic;
 }

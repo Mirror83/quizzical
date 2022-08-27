@@ -1,3 +1,5 @@
+import { decode } from "html-entities";
+
 export default function Choice({
   choiceText,
   selectChoice,
@@ -16,7 +18,7 @@ export default function Choice({
             : "choice not-chosen"
         }
       >
-        {choiceText}
+        {decode(choiceText)}
       </div>
     );
   } else
@@ -25,7 +27,7 @@ export default function Choice({
         className={chosen ? "choice chosen" : "choice"}
         onClick={selectChoice}
       >
-        {choiceText}
+        {decode(choiceText)}
       </div>
     );
 }

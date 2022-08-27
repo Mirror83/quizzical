@@ -13,9 +13,45 @@ import blob2 from "./blob2.svg";
 
 function App() {
   const [quizStarted, setQuizStarted] = React.useState(false);
-  const [questions, setQuestions] = React.useState(Questions);
+  const [questions, setQuestions] = React.useState([]);
   const [quizDone, setQuizDone] = React.useState(false);
   const [correctCount, setCorrectCount] = React.useState(0);
+
+  React.useEffect(() => {
+    if (!quizDone) {
+      getQuestions();
+    }
+  }, [quizDone]);
+
+  async function getQuestions() {
+    try {
+      const response = await fetch(
+        "https://opentdb.com/api.php?amount=5&type=multiple"
+      );
+      const data = await response.json();
+      const resultsArray = data.results;
+      console.log(resultsArray);
+      const questionsArray = resultsArray.map((result) => {
+        const choices = [...result.incorrect_answers, result.correct_answer];
+        const shiftedChoices = [];
+        for (let i = 0; i < 4; i++) {
+          shiftedChoices.push({ id: i + 1, chosen: false, choice: choices[i] });
+        }
+        return {
+          question: result.question,
+          answer: result.correct_answer,
+          choices: shiftedChoices,
+          selectedChoice: null,
+          correctlyAnswered: false,
+        };
+      });
+
+      setQuestions(questionsArray);
+    } catch (error) {
+      console.log("Could not get the questions.");
+      console.log(error);
+    }
+  }
 
   const questionsAndChoices = questions.map((quiz) => (
     <Question
@@ -90,10 +126,12 @@ function App() {
     return (
       <div className="App">
         <div className="questions">{questionsAndChoices}</div>
-        {quizDone &&
-          `You have answered ${Math.floor(
-            correctCount / 2
-          )}/5 questions correctly`}
+        <div className="outcome">
+          {quizDone &&
+            `You have answered ${Math.floor(
+              correctCount / 2
+            )}/5 questions correctly`}
+        </div>{" "}
         <div
           className="check-answers"
           onClick={quizDone ? playAgain : checkAnswers}
