@@ -28,7 +28,7 @@ function App() {
   async function getQuestions() {
     try {
       const response = await fetch(
-        "https://opentdb.com/api.php?amount=5&type=multiple"
+        "https://opentdb.com/api.php?amount=5&difficulty=easy&type=multiple"
       );
       const data = await response.json();
       const resultsArray = data.results;
