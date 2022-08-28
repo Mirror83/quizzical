@@ -8,9 +8,7 @@ import logo from "./logo.svg";
 import blob from "./blob.svg";
 import blob2 from "./blob2.svg";
 
-// TO DO:
-// Randomize the order of the choices
-// so that the answers are not at the same position each time
+// TO DO: Deploy using Heroku after (or before) figuring out how to handle connection errors
 
 function App() {
   const [quizStarted, setQuizStarted] = React.useState(false);
