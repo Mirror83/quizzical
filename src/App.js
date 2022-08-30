@@ -8,14 +8,13 @@ import logo from "./logo.svg";
 import blob from "./blob.svg";
 import blob2 from "./blob2.svg";
 
-// TO DO: Deploy using Heroku after (or before) figuring out how to handle connection errors
-
 function App() {
   const [quizStarted, setQuizStarted] = React.useState(false);
   const [questions, setQuestions] = React.useState([]);
   const [quizDone, setQuizDone] = React.useState(false);
   const [correctCount, setCorrectCount] = React.useState(0);
   const [questionsReady, setQuestionsReady] = React.useState(false);
+  const [networkError, setNetworkError] = React.useState(false);
 
   React.useEffect(() => {
     if (!quizDone) {
@@ -42,6 +41,7 @@ function App() {
         }
 
         setQuestionsReady(true);
+        setNetworkError(false);
 
         return {
           question: result.question,
@@ -54,8 +54,10 @@ function App() {
 
       setQuestions(questionsArray);
     } catch (error) {
-      console.log("Could not get the questions.");
-      console.log(error);
+      if (error instanceof TypeError) {
+        console.log("Could not get the questions.");
+        setNetworkError(true);
+      } else console.log(error);
     }
   }
 
@@ -135,8 +137,19 @@ function App() {
         <div className="App">
           <img className="top-blob" src={blob} alt="blob"></img>
           <div className="content-container">
-            <img className="logo faster" src={logo} alt="React logo"></img>
-            <h1 className="loading">Loading questions...</h1>
+            <img
+              className={networkError ? "logo" : "logo faster"}
+              src={logo}
+              alt="React logo"
+            ></img>
+            {networkError ? (
+              <div className="network-error">
+                <h1>Could not get questions</h1>
+                <p>Check your internet connection and try reloading the page</p>
+              </div>
+            ) : (
+              <h1 className="loading">Loading questions...</h1>
+            )}
           </div>
           <img className="bottom-blob" src={blob2} alt="blob"></img>
         </div>
