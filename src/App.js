@@ -142,14 +142,18 @@ function App() {
               src={logo}
               alt="React logo"
             ></img>
-            {networkError ? (
-              <div className="network-error">
-                <h1>Could not get questions</h1>
-                <p>Check your internet connection and try reloading the page</p>
-              </div>
-            ) : (
-              <h1 className="loading">Loading questions...</h1>
-            )}
+            <main>
+              {networkError ? (
+                <div className="network-error">
+                  <h1>Could not get questions</h1>
+                  <p>
+                    Check your internet connection and try reloading the page
+                  </p>
+                </div>
+              ) : (
+                <h1 className="loading">Loading questions...</h1>
+              )}
+            </main>
           </div>
           <img className="bottom-blob" src={blob2} alt="blob"></img>
         </div>
@@ -157,19 +161,21 @@ function App() {
     } else
       return (
         <div className="App">
-          <div className="questions">{questionsAndChoices}</div>
-          <div className="outcome">
-            {quizDone &&
-              `You have answered ${Math.floor(
-                correctCount / 2
-              )}/5 questions correctly`}
-          </div>{" "}
-          <div
-            className="check-answers"
-            onClick={quizDone ? playAgain : checkAnswers}
-          >
-            {quizDone ? "Play again" : "Check answers"}
-          </div>
+          <main>
+            <div className="questions">{questionsAndChoices}</div>
+            <div className="outcome">
+              {quizDone &&
+                `You have answered ${Math.floor(
+                  correctCount / 2
+                )}/5 questions correctly`}
+            </div>{" "}
+            <div
+              className="check-answers"
+              onClick={quizDone ? playAgain : checkAnswers}
+            >
+              {quizDone ? "Play again" : "Check answers"}
+            </div>
+          </main>
         </div>
       );
   } else {
@@ -177,14 +183,16 @@ function App() {
     return (
       <div className="App">
         <img className="top-blob" src={blob} alt="blob"></img>
-        <div className="content-container">
-          <img className="logo" src={logo} alt="React logo"></img>
-          <h1 className="title">Quizzical</h1>
-          <p className="description">Test your trivia knowledge</p>
-          <div className="start-quiz" onClick={startQuiz}>
-            Start Quiz
+        <main>
+          <div className="content-container">
+            <img className="logo" src={logo} alt="React logo"></img>
+            <h1 className="title">Quizzical</h1>
+            <p className="description">Test your trivia knowledge</p>
+            <div className="start-quiz" onClick={startQuiz}>
+              Start Quiz
+            </div>
           </div>
-        </div>
+        </main>
         <img className="bottom-blob" src={blob2} alt="blob"></img>
       </div>
     );
