@@ -4,9 +4,9 @@ import Question from "./Question";
 
 import "./App.css";
 
-import LoadingScreen from "./components/LoadingScreen";
-import Welcome from "./components/Welcome";
-import GameScreen from "./components/GameScreen";
+import logo from "./logo.svg";
+import blob from "./blob.svg";
+import blob2 from "./blob2.svg";
 
 function App() {
   const [quizStarted, setQuizStarted] = React.useState(false);
@@ -25,11 +25,11 @@ function App() {
   async function getQuestions() {
     try {
       const response = await fetch(
-        "https://opentdb.com/api.php?amount=5&type=multiple"
+        "https://opentdb.com/api.php?amount=5&difficulty=easy&type=multiple"
       );
       const data = await response.json();
       const resultsArray = data.results;
-      // console.log(resultsArray);
+      console.log(resultsArray);
       const questionsArray = resultsArray.map((result) => {
         const choices = [
           ...result.incorrect_answers,
@@ -133,20 +133,69 @@ function App() {
 
   if (quizStarted) {
     if (!questionsReady) {
-      return <LoadingScreen networkError={networkError} />;
+      return (
+        <div className="App">
+          <img className="top-blob" src={blob} alt="blob"></img>
+          <div className="content-container">
+            <img
+              className={networkError ? "logo" : "logo faster"}
+              src={logo}
+              alt="React logo"
+            ></img>
+            <main>
+              {networkError ? (
+                <div className="network-error">
+                  <h1>Could not get questions</h1>
+                  <p>
+                    Check your internet connection and try reloading the page
+                  </p>
+                </div>
+              ) : (
+                <h1 className="loading">Loading questions...</h1>
+              )}
+            </main>
+          </div>
+          <img className="bottom-blob" src={blob2} alt="blob"></img>
+        </div>
+      );
     } else
       return (
-        <GameScreen
-          questionsAndChoices={questionsAndChoices}
-          quizDone={quizDone}
-          correctCount={correctCount}
-          playAgain={() => playAgain()}
-          checkAnswers={() => checkAnswers()}
-        />
+        <div className="App">
+          <main>
+            <div className="questions">{questionsAndChoices}</div>
+            <div className="outcome">
+              {quizDone &&
+                `You have answered ${Math.floor(
+                  correctCount / 2
+                )}/5 questions correctly`}
+            </div>{" "}
+            <div
+              className="check-answers"
+              onClick={quizDone ? playAgain : checkAnswers}
+            >
+              {quizDone ? "Play again" : "Check answers"}
+            </div>
+          </main>
+        </div>
       );
   } else {
     // Welcome Page
-    return <Welcome startQuiz={startQuiz} />;
+    return (
+      <div className="App">
+        <img className="top-blob" src={blob} alt="blob"></img>
+        <main>
+          <div className="content-container">
+            <img className="logo" src={logo} alt="React logo"></img>
+            <h1 className="title">Quizzical</h1>
+            <p className="description">Test your trivia knowledge</p>
+            <div className="start-quiz" onClick={startQuiz}>
+              Start Quiz
+            </div>
+          </div>
+        </main>
+        <img className="bottom-blob" src={blob2} alt="blob"></img>
+      </div>
+    );
   }
 }
 
