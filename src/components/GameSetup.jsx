@@ -1,5 +1,9 @@
 import React from "react";
 
+import logo from "../logo.svg";
+import blob from "../blob.svg";
+import blob2 from "../blob2.svg";
+
 const categories = [
  "General Knowledge",
  "Entertainment: Books",
@@ -39,8 +43,15 @@ export default function GameSetup(props) {
     />);
  
     return <div className="App">
+        <img className="top-blob" src={blob} alt="blob"></img>
         <main>
             <div className="content-container">
+            <img
+              className="logo"
+              src={logo}
+              alt="React logo"
+            ></img>
+            <h1>Game Setup</h1>
             <form action=""
              onSubmit={
                 (e) => {
@@ -48,31 +59,36 @@ export default function GameSetup(props) {
                     props.gameSetUpDone()
                 }
             }>
-                <label htmlFor="difficulty">Difficulty: </label>
-                <select id="difficulty" 
-                name="difficulty" 
-                value={props.gameOptions.difficulty} 
-                onChange={(e) => props.changeGameDifficulty(e.target.value)}>
-                    <option value="any">Any</option>
-                    <option value="easy">Easy</option>
-                    <option value="hard">Hard</option>
-                    <option value="medium">Medium</option>
-                </select>
+                <div>
+                    <label htmlFor="difficulty">Difficulty </label>
+                    <select id="difficulty" 
+                    name="difficulty" 
+                    value={props.gameOptions.difficulty} 
+                    onChange={(e) => props.changeGameDifficulty(e.target.value)}>
+                        <option value="any">Any</option>
+                        <option value="easy">Easy</option>
+                        <option value="hard">Hard</option>
+                        <option value="medium">Medium</option>
+                    </select>
+                </div>
+                
 
-                <label htmlFor="category">Cartegory: </label>
+                <div>
+                    <label htmlFor="category">Cartegory </label>
                 <select id="category" 
                 name="category" 
                 value={props.gameOptions.category} 
                 onChange={(e) => props.changeGameCategory(e.target.value)}>
                     <option value="any">Any</option>
                     {optionElements}
-                </select>
-                <button className="start-quiz">
+                </select></div>
+                <button>
                     Start quiz
                 </button>
             </form>
             </div>
         </main>
+        <img className="bottom-blob" src={blob2} alt="blob"></img>
     </div>
 }
 
