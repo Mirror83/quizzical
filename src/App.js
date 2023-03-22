@@ -7,26 +7,50 @@ import "./App.css";
 import LoadingScreen from "./components/LoadingScreen";
 import GameScreen from "./components/GameScreen";
 import Welcome from "./components/Welcome";
+import GameSetup from "./components/GameSetup";
 
 function App() {
-  const [quizStarted, setQuizStarted] = React.useState(false);
+  const [startGameSetup, setStartGameSetUp] = React.useState(false);
+  const [isGameSetUp, setIsGameSetUp] = React.useState(false);
+  const [gameOptions, setGameOptions] = React.useState({
+    category: "any",
+    difficulty: "any",
+  });
+
   const [questions, setQuestions] = React.useState([]);
-  const [quizDone, setQuizDone] = React.useState(false);
-  const [correctCount, setCorrectCount] = React.useState(0);
   const [questionsReady, setQuestionsReady] = React.useState(false);
   const [networkError, setNetworkError] = React.useState(false);
 
+  const [quizDone, setQuizDone] = React.useState(false);
+  const [correctCount, setCorrectCount] = React.useState(0);
+
   React.useEffect(() => {
-    if (!quizDone) {
+    if (isGameSetUp) {
       getQuestions();
     }
-  }, [quizDone]);
+  }, [isGameSetUp]);
+
+  function urlSetup() {
+    let trivia_db_url = "https://opentdb.com/api.php?amount=5";
+    if (gameOptions.category === "any" && gameOptions.difficulty === "any") {
+      trivia_db_url += "";
+    } else if (gameOptions.category === "any") {
+      trivia_db_url += `&difficulty=${gameOptions.difficulty}`;
+    } else if (gameOptions.difficulty === "any") {
+      trivia_db_url += `&category=${gameOptions.category}`;
+    } else {
+      trivia_db_url += `&category=${gameOptions.category}&difficulty=${gameOptions.difficulty}`;
+    }
+
+    trivia_db_url += "&type=multiple";
+    console.log(trivia_db_url);
+
+    return trivia_db_url;
+  }
 
   async function getQuestions() {
     try {
-      const response = await fetch(
-        "https://opentdb.com/api.php?amount=5&difficulty=easy&type=multiple"
-      );
+      const response = await fetch(urlSetup());
       const data = await response.json();
       const resultsArray = data.results;
       console.log(resultsArray);
@@ -72,8 +96,8 @@ function App() {
     />
   ));
 
-  function startQuiz() {
-    setQuizStarted(true);
+  function gameSetUpDone() {
+    setIsGameSetUp(true);
   }
 
   function selectChoice(questionId, choiceId) {
@@ -131,22 +155,67 @@ function App() {
     setCorrectCount(0);
   }
 
-  if (quizStarted) {
-    if (!questionsReady) {
-      return <LoadingScreen networkError={networkError} />;
-    } else
-      return (
-        <GameScreen
-          questionsAndChoices={questionsAndChoices}
-          quizDone={quizDone}
-          correctCount={correctCount}
-          playAgain={playAgain}
-          checkAnswers={checkAnswers}
-        />
-      );
-  } else {
-    return <Welcome startQuiz={startQuiz} />;
+  function changeStartGameSetup() {
+    setStartGameSetUp((prevSetup) => !prevSetup);
   }
+
+  function changeGameCategory(newCategory) {
+    setGameOptions((prevOptions) => ({
+      ...prevOptions,
+      category: newCategory,
+    }));
+  }
+
+  function changeGameDifficulty(newDifficulty) {
+    setGameOptions((prevOptions) => ({
+      ...prevOptions,
+      difficulty: newDifficulty,
+    }));
+  }
+
+  if (!startGameSetup) {
+    return <Welcome startGameSetup={changeStartGameSetup} />;
+  } else if (startGameSetup && !isGameSetUp) {
+    return (
+      <GameSetup
+        gameOptions={gameOptions}
+        changeGameCategory={changeGameCategory}
+        changeGameDifficulty={changeGameDifficulty}
+        gameSetUpDone={gameSetUpDone}
+      />
+    );
+  }
+
+  if (isGameSetUp && questionsReady) {
+    return (
+      <GameScreen
+        questionsAndChoices={questionsAndChoices}
+        quizDone={quizDone}
+        correctCount={correctCount}
+        playAgain={playAgain}
+        checkAnswers={checkAnswers}
+      />
+    );
+  } else if (isGameSetUp && !questionsReady) {
+    return <LoadingScreen networkError={networkError} />;
+  }
+
+  // if (quizStarted) {
+  //   if (!questionsReady) {
+  //     return <LoadingScreen networkError={networkError} />;
+  //   } else
+  //     return (
+  //       <GameScreen
+  //         questionsAndChoices={questionsAndChoices}
+  //         quizDone={quizDone}
+  //         correctCount={correctCount}
+  //         playAgain={playAgain}
+  //         checkAnswers={checkAnswers}
+  //       />
+  //     );
+  // } else {
+  //   return <Welcome startQuiz={startQuiz} />;
+  // }
 }
 
 export default App;
