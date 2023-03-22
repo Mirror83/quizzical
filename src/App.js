@@ -25,10 +25,10 @@ function App() {
   const [correctCount, setCorrectCount] = React.useState(0);
 
   React.useEffect(() => {
-    if (isGameSetUp && !quizDone) {
+    if (isGameSetUp) {
       getQuestions();
     }
-  }, [isGameSetUp, quizDone]);
+  }, [isGameSetUp]);
 
   function urlSetup() {
     let trivia_db_url = "https://opentdb.com/api.php?amount=5";
