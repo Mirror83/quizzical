@@ -10,8 +10,8 @@ export default function Welcome(props) {
             <img className="logo" src={logo} alt="React logo"></img>
             <h1 className="title">Quizzical</h1>
             <p className="description">Test your trivia knowledge</p>
-            <div className="start-quiz" onClick={props.startQuiz}>
-              Start Quiz
+            <div className="start-quiz" onClick={props.startGameSetup}>
+              Start
             </div>
           </div>
         </main>
