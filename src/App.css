@@ -61,6 +61,10 @@ body {
   opacity: 0.5;
 }
 
+.setup-title {
+  margin-top: 60px;
+}
+
 @keyframes rotate {
   from {
     rotate: 0deg;
@@ -269,7 +273,9 @@ label {
 select {
   display: block;
   margin-bottom: 10px;
-  max-width: 50%;
+  max-width: fit-content;
+
+  font-family: var(--font-family);
 }
 
 button {

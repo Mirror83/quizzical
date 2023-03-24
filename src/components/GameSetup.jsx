@@ -55,7 +55,7 @@ export default function GameSetup(props) {
               src={logo}
               alt="React logo"
             ></img>
-            <h1>Game Setup</h1>
+            <h1 className="setup-title">Game Setup</h1>
             <form action=""
              onSubmit={
                 (e) => {
