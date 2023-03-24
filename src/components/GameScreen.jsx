@@ -1,5 +1,5 @@
 import Confetti from "react-confetti";
-import gameStartAnimation from "../animate_elements";
+import {gameStartAnimation} from "../animate_elements";
 import React from "react";
 
 export default function GameScreen(props) {

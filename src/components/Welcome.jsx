@@ -1,8 +1,15 @@
+import React from "react";
+
 import logo from "../logo.svg";
 import blob from "../blob.svg";
 import blob2 from "../blob2.svg";
 
+import { welcomeAnimation } from "../animate_elements";
+
 export default function Welcome(props) {
+    React.useEffect(() => {
+      welcomeAnimation();
+    }, [])
     return <div className="App">
         <img className="top-blob" src={blob} alt="blob"></img>
         <main>

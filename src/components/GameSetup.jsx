@@ -4,6 +4,8 @@ import logo from "../logo.svg";
 import blob from "../blob.svg";
 import blob2 from "../blob2.svg";
 
+import {setUpScreenAnimation} from "../animate_elements";
+
 const categories = [
  "General Knowledge",
  "Entertainment: Books",
@@ -34,6 +36,9 @@ const categories = [
 const categoryOffset = 9;
 
 export default function GameSetup(props) {
+    React.useEffect(() => {
+        setUpScreenAnimation()
+    }, [])
     const optionElements = categories.map(
         category => <OptionElement 
         value={categories.indexOf(category) + categoryOffset} 

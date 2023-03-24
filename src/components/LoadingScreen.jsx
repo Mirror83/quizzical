@@ -1,8 +1,16 @@
+import React from "react";
+
 import logo from "../logo.svg";
 import blob from "../blob.svg";
 import blob2 from "../blob2.svg";
 
+import {fadeInLoadingScreen} from "../animate_elements";
+
 export default function LoadingScreen(props) {
+  React.useEffect(() => {
+    fadeInLoadingScreen();
+  }, [])
+  
     return <div className="App">
           <img className="top-blob" src={blob} alt="blob"></img>
           <div className="content-container">
