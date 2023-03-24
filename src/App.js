@@ -25,10 +25,10 @@ function App() {
   const [correctCount, setCorrectCount] = React.useState(0);
 
   React.useEffect(() => {
-    if (isGameSetUp) {
+    if (isGameSetUp && !quizDone) {
       getQuestions();
     }
-  }, [isGameSetUp]);
+  }, [isGameSetUp, quizDone]);
 
   function urlSetup() {
     let trivia_db_url = "https://opentdb.com/api.php?amount=5";
@@ -173,6 +173,11 @@ function App() {
     }));
   }
 
+  function changeOptions() {
+    setIsGameSetUp(false);
+    playAgain();
+  }
+
   if (!startGameSetup) {
     return <Welcome startGameSetup={changeStartGameSetup} />;
   } else if (startGameSetup && !isGameSetUp) {
@@ -194,6 +199,7 @@ function App() {
         correctCount={correctCount}
         playAgain={playAgain}
         checkAnswers={checkAnswers}
+        changeOptions={changeOptions}
       />
     );
   } else if (isGameSetUp && !questionsReady) {

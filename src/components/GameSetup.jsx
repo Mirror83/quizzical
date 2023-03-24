@@ -34,7 +34,6 @@ const categories = [
 const categoryOffset = 9;
 
 export default function GameSetup(props) {
-    
     const optionElements = categories.map(
         category => <OptionElement 
         value={categories.indexOf(category) + categoryOffset} 
