@@ -1,3 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=Cabin:wght@400;700&display=swap");
+
+:root {
+  --font-family: Karla, sans-serif;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(35, 35, 51);
+}
+
 .App {
   position: relative;
   text-align: center;
@@ -7,11 +21,13 @@
   padding: 20px;
   padding-top: 0px;
   min-height: 600px;
-  max-height: max-content;
+  max-height: 90vh;
   min-width: min-content;
   max-width: 600px;
   color: black;
   background: #f5f7fb;
+  overflow: clip;
+  border-radius: 5%;
 }
 
 .top-blob {
@@ -39,11 +55,10 @@
 .logo {
   position: absolute;
   top: 80px;
-  min-height: 80px;
-  height: 15vmin;
+  height: 20vmin;
   animation: rotate 10s infinite linear;
   border: none;
-  opacity: 0.3;
+  opacity: 0.5;
 }
 
 @keyframes rotate {
@@ -104,6 +119,7 @@
   padding-right: 30px;
   padding-top: 25px;
   transition: all ease-in 1s;
+  opacity: 1;
 }
 
 .quiz {
@@ -152,16 +168,13 @@
 }
 
 .check-answers {
-  margin-top: 20px;
-  margin-bottom: 30px;
-  margin-left: auto;
-  margin-right: auto;
   display: flex;
+  flex-direction: column;
   align-content: center;
   justify-content: center;
   padding: 10px;
   width: 120px;
-  height: 20px;
+  height: 40px;
   color: white;
   border-radius: 10px;
   background-color: rgb(165, 44, 165);
@@ -229,4 +242,74 @@
     opacity: 0.7;
     rotate: 360deg;
   }
+}
+
+form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  height: 150px;
+  width: 50%;
+}
+
+form div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+select {
+  display: block;
+  margin-bottom: 10px;
+  max-width: 50%;
+}
+
+button {
+  display: block;
+  font-family: var(--font-family);
+  width: 150px;
+  height: 50px;
+  padding: 10px;
+  margin-top: 20px;
+  border: none;
+  transition: all 0.2s ease-in;
+  background-color: rgb(36, 173, 228);
+  color: white;
+  border-radius: 10px;
+  font-size: medium;
+}
+
+button:hover {
+  translate: 0px 0px 10px;
+  width: 200px;
+  height: 60px;
+  filter: brightness(0.9);
+}
+
+.game {
+  overflow-y: scroll;
+}
+
+.change-difficulty {
+  width: 200px;
+}
+
+.game-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  gap: 20px;
+  width: 100%;
 }
