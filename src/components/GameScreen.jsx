@@ -13,7 +13,7 @@ export default function GameScreen(props) {
     return(
         <div className="App game">
           <main>
-            {props.quizDone && correctCount === 5 && <Confetti />}
+            {props.quizDone && correctCount === 5 && <Confetti tweenDuration={2500}/>}
             <div className="questions">{props.questionsAndChoices}</div>
             <div className="outcome">
               {props.quizDone &&
