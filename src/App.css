@@ -12,7 +12,16 @@ body {
   background-color: rgb(35, 35, 51);
 }
 
+#root {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+}
+
 .App {
+  display: grid;
   position: relative;
   text-align: center;
   margin: auto;
@@ -20,10 +29,8 @@ body {
   margin-bottom: 20px;
   padding: 20px;
   padding-top: 0px;
-  min-height: 600px;
-  max-height: 90vh;
-  min-width: min-content;
-  max-width: 600px;
+  height: 90vh;
+  width: 70vw;
   color: black;
   background: #f5f7fb;
   overflow: clip;
@@ -42,6 +49,10 @@ body {
   left: 2px;
 }
 
+main {
+  align-self: center;
+}
+
 .content-container {
   position: relative;
   display: flex;
@@ -55,14 +66,15 @@ body {
 .logo {
   position: absolute;
   top: 80px;
-  height: 20vmin;
+  max-height: 20vmin;
+  min-height: 100px;
   animation: rotate 10s infinite linear;
   border: none;
   opacity: 0.5;
 }
 
 .setup-title {
-  margin-top: 60px;
+  margin-bottom: 10px;
 }
 
 @keyframes rotate {
@@ -253,8 +265,9 @@ form {
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  height: 150px;
-  width: 50%;
+  height: 210px;
+  width: 65%;
+  margin-top: 30px;
 }
 
 form div {
