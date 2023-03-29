@@ -265,9 +265,8 @@ form {
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  height: 210px;
   width: 65%;
-  margin-top: 30px;
+  padding-top: calc(20vmin - 65px);
 }
 
 form div {
@@ -281,6 +280,7 @@ form div {
 label {
   display: block;
   margin-bottom: 5px;
+  font-size: large;
 }
 
 select {
@@ -289,6 +289,15 @@ select {
   max-width: fit-content;
 
   font-family: var(--font-family);
+}
+
+div > select {
+  --background-color: lightblue;
+  background-color: var(--background-color);
+  height: 40px;
+  border: 1px solid var(--background-color);
+  border-radius: 10px;
+  text-align: center;
 }
 
 button {
