@@ -43,7 +43,6 @@ function App() {
     }
 
     trivia_db_url += "&type=multiple";
-    console.log(trivia_db_url);
 
     return trivia_db_url;
   }
@@ -53,7 +52,6 @@ function App() {
       const response = await fetch(urlSetup());
       const data = await response.json();
       const resultsArray = data.results;
-      console.log(resultsArray);
       const questionsArray = resultsArray.map((result) => {
         const choices = [
           ...result.incorrect_answers,
@@ -101,10 +99,6 @@ function App() {
   }
 
   function selectChoice(questionId, choiceId) {
-    const selected = questions.find(
-      (question) => question.question === questionId
-    );
-
     setQuestions((prevQuestions) =>
       prevQuestions.map((quiz) => {
         if (quiz.question === questionId) {
@@ -127,7 +121,6 @@ function App() {
         }
       })
     );
-    console.log(selected.question, selected.choices[choiceId - 1]);
   }
 
   function checkAnswers() {
@@ -205,23 +198,6 @@ function App() {
   } else if (isGameSetUp && !questionsReady) {
     return <LoadingScreen networkError={networkError} />;
   }
-
-  // if (quizStarted) {
-  //   if (!questionsReady) {
-  //     return <LoadingScreen networkError={networkError} />;
-  //   } else
-  //     return (
-  //       <GameScreen
-  //         questionsAndChoices={questionsAndChoices}
-  //         quizDone={quizDone}
-  //         correctCount={correctCount}
-  //         playAgain={playAgain}
-  //         checkAnswers={checkAnswers}
-  //       />
-  //     );
-  // } else {
-  //   return <Welcome startQuiz={startQuiz} />;
-  // }
 }
 
 export default App;
