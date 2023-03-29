@@ -9,6 +9,9 @@ import GameScreen from "./components/GameScreen";
 import Welcome from "./components/Welcome";
 import GameSetup from "./components/GameSetup";
 
+const NUM_CHOICES = 4;
+
+// Task: Code clean-up required
 function App() {
   const [startGameSetup, setStartGameSetUp] = React.useState(false);
   const [isGameSetUp, setIsGameSetUp] = React.useState(false);
@@ -17,15 +20,20 @@ function App() {
     difficulty: "any",
   });
 
-  const [questions, setQuestions] = React.useState([]);
+  const [questions, setQuestions] = React.useState({
+    correctCount: 0,
+    questions: [],
+  });
   const [questionsReady, setQuestionsReady] = React.useState(false);
+  const getQuestionsCalled = React.useRef(false);
   const [networkError, setNetworkError] = React.useState(false);
 
   const [quizDone, setQuizDone] = React.useState(false);
-  const [correctCount, setCorrectCount] = React.useState(0);
 
   React.useEffect(() => {
-    if (isGameSetUp && !quizDone) {
+    if (isGameSetUp && !quizDone && !getQuestionsCalled.current) {
+      getQuestionsCalled.current = true;
+      // eslint-disable-next-line
       getQuestions();
     }
   }, [isGameSetUp, quizDone]);
@@ -58,7 +66,7 @@ function App() {
           result.correct_answer,
         ].sort();
         const shiftedChoices = [];
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < NUM_CHOICES; i++) {
           shiftedChoices.push({ id: i + 1, chosen: false, choice: choices[i] });
         }
 
@@ -74,7 +82,7 @@ function App() {
         };
       });
 
-      setQuestions(questionsArray);
+      setQuestions({ correctCount: 0, questions: questionsArray });
     } catch (error) {
       if (error instanceof TypeError) {
         console.log("Could not get the questions.");
@@ -83,7 +91,7 @@ function App() {
     }
   }
 
-  const questionsAndChoices = questions.map((quiz) => (
+  const questionsAndChoices = questions.questions.map((quiz) => (
     <Question
       key={quiz.question}
       id={quiz.question}
@@ -99,8 +107,9 @@ function App() {
   }
 
   function selectChoice(questionId, choiceId) {
-    setQuestions((prevQuestions) =>
-      prevQuestions.map((quiz) => {
+    setQuestions((prevQuestions) => ({
+      ...prevQuestions,
+      questions: prevQuestions.questions.map((quiz) => {
         if (quiz.question === questionId) {
           return {
             ...quiz,
@@ -119,33 +128,34 @@ function App() {
         } else {
           return quiz;
         }
-      })
-    );
+      }),
+    }));
   }
 
   function checkAnswers() {
-    setQuestions((prevQuestions) =>
-      prevQuestions.map((prevQuestion) => {
+    setQuestions((prevQuestions) => ({
+      ...prevQuestions,
+      questions: prevQuestions.questions.map((prevQuestion) => {
         if (prevQuestion.selectedChoice === null) {
           return prevQuestion;
         } else if (
           prevQuestion.choices[prevQuestion.selectedChoice - 1].choice ===
           prevQuestion.answer
         ) {
-          setCorrectCount((prevCount) => prevCount + 1);
+          prevQuestions.correctCount += 1;
           return { ...prevQuestion, correctlyAnswered: true };
         } else return prevQuestion;
-      })
-    );
+      }),
+    }));
 
     setQuizDone(true);
   }
 
   function playAgain() {
-    setQuestions([]);
+    setQuestions({ correctCount: 0, questions: [] });
     setQuestionsReady(false);
     setQuizDone(false);
-    setCorrectCount(0);
+    getQuestionsCalled.current = false;
   }
 
   function changeStartGameSetup() {
@@ -189,7 +199,7 @@ function App() {
       <GameScreen
         questionsAndChoices={questionsAndChoices}
         quizDone={quizDone}
-        correctCount={correctCount}
+        correctCount={questions.correctCount}
         playAgain={playAgain}
         checkAnswers={checkAnswers}
         changeOptions={changeOptions}
