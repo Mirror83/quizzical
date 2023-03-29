@@ -13,13 +13,14 @@ export default function LoadingScreen(props) {
   
     return <div className="App">
           <img className="top-blob" src={blob} alt="blob"></img>
+          <main>
           <div className="content-container">
             <img
               className={props.networkError ? "logo" : "logo faster"}
               src={logo}
               alt="React logo"
             ></img>
-            <main>
+            
               {props.networkError ? (
                 <div className="network-error">
                   <h1>Could not get questions</h1>
@@ -30,8 +31,8 @@ export default function LoadingScreen(props) {
               ) : (
                 <h1 className="loading">Loading questions...</h1>
               )}
-            </main>
           </div>
+          </main>
           <img className="bottom-blob" src={blob2} alt="blob"></img>
         </div>
 }

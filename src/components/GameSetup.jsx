@@ -55,7 +55,6 @@ export default function GameSetup(props) {
               src={logo}
               alt="React logo"
             ></img>
-            <h1 className="setup-title">Game Setup</h1>
             <form action=""
              onSubmit={
                 (e) => {
@@ -64,19 +63,21 @@ export default function GameSetup(props) {
                 }
             }>
                 <div>
+                    <h1 className="setup-title">Game Setup</h1>
                     <label htmlFor="difficulty">Difficulty </label>
-                    <select id="difficulty" 
-                    name="difficulty" 
-                    value={props.gameOptions.difficulty} 
-                    onChange={(e) => props.changeGameDifficulty(e.target.value)}>
-                        <option value="any">Any</option>
-                        <option value="easy">Easy</option>
-                        <option value="hard">Hard</option>
-                        <option value="medium">Medium</option>
-                    </select>
+                    <div>
+                        <select id="difficulty" 
+                        name="difficulty" 
+                        value={props.gameOptions.difficulty} 
+                        onChange={(e) => props.changeGameDifficulty(e.target.value)}>
+                            <option value="any">Any</option>
+                            <option value="easy">Easy</option>
+                            <option value="hard">Hard</option>
+                            <option value="medium">Medium</option>
+                        </select>
+                    </div>   
                 </div>
                 
-
                 <div>
                     <label htmlFor="category">Cartegory </label>
                 <select id="category" 
