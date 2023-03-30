@@ -9,7 +9,12 @@ import GameScreen from "./components/GameScreen";
 import Welcome from "./components/Welcome";
 import GameSetup from "./components/GameSetup";
 
-const NUM_CHOICES = 4;
+// Game constants
+const gameConstants = {
+  NUM_CHOICES: 4,
+  DEFAULT_MODE: 0,
+  TIMED_MODE: 1,
+};
 
 // Task: Code clean-up required
 function App() {
@@ -18,6 +23,7 @@ function App() {
   const [gameOptions, setGameOptions] = React.useState({
     category: "any",
     difficulty: "any",
+    mode: gameConstants.DEFAULT_MODE,
   });
 
   const [questions, setQuestions] = React.useState({
@@ -66,7 +72,7 @@ function App() {
           result.correct_answer,
         ].sort();
         const shiftedChoices = [];
-        for (let i = 0; i < NUM_CHOICES; i++) {
+        for (let i = 0; i < gameConstants.NUM_CHOICES; i++) {
           shiftedChoices.push({ id: i + 1, chosen: false, choice: choices[i] });
         }
 
@@ -203,6 +209,7 @@ function App() {
         playAgain={playAgain}
         checkAnswers={checkAnswers}
         changeOptions={changeOptions}
+        gameMode={gameOptions.mode}
       />
     );
   } else if (isGameSetUp && !questionsReady) {
@@ -210,4 +217,4 @@ function App() {
   }
 }
 
-export default App;
+export { App, gameConstants };
