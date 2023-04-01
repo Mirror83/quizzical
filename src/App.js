@@ -170,6 +170,11 @@ function App() {
       }),
     }));
 
+    if (gameOptions.mode === gameConstants.TIMED_MODE) {
+      clearInterval(intervalObject.current);
+      intervalObject.current = null;
+    }
+
     setQuizDone(true);
   }
 
@@ -191,6 +196,8 @@ function App() {
     setQuestionsReady(false);
     setQuizDone(false);
     getQuestionsCalled.current = false;
+    if (gameOptions.mode === gameConstants.TIMED_MODE)
+      setTime(gameConstants.DEFAULT_TIME_IN_SECONDS);
   }
 
   function changeStartGameSetup() {
