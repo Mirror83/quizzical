@@ -14,6 +14,7 @@ const gameConstants = {
   NUM_CHOICES: 4,
   DEFAULT_MODE: 0,
   TIMED_MODE: 1,
+  DEFAULT_TIME_IN_SECONDS: 60,
 };
 
 // Task: Code clean-up required
@@ -23,7 +24,7 @@ function App() {
   const [gameOptions, setGameOptions] = React.useState({
     category: "any",
     difficulty: "any",
-    mode: gameConstants.DEFAULT_MODE,
+    mode: gameConstants.TIMED_MODE,
   });
 
   const [questions, setQuestions] = React.useState({
@@ -34,7 +35,22 @@ function App() {
   const getQuestionsCalled = React.useRef(false);
   const [networkError, setNetworkError] = React.useState(false);
 
+  const [time, setTime] = React.useState(gameConstants.DEFAULT_TIME_IN_SECONDS);
+  const intervalObject = React.useRef(null);
+
   const [quizDone, setQuizDone] = React.useState(false);
+
+  React.useEffect(() => {
+    if (
+      gameOptions.mode === gameConstants.TIMED_MODE &&
+      intervalObject.current === null &&
+      questionsReady
+    ) {
+      intervalObject.current = setInterval(() => {
+        setTime((prevTime) => prevTime - 1);
+      }, 1000);
+    }
+  }, [gameOptions, intervalObject, questionsReady]);
 
   React.useEffect(() => {
     if (isGameSetUp && !quizDone && !getQuestionsCalled.current) {
@@ -157,6 +173,19 @@ function App() {
     setQuizDone(true);
   }
 
+  React.useEffect(() => {
+    if (
+      gameOptions.mode === gameConstants.TIMED_MODE &&
+      time < 0 &&
+      !quizDone
+    ) {
+      setTime(0);
+      clearInterval(intervalObject.current);
+      intervalObject.current = null;
+      checkAnswers();
+    }
+  }, [gameOptions, time, quizDone]);
+
   function playAgain() {
     setQuestions({ correctCount: 0, questions: [] });
     setQuestionsReady(false);
@@ -210,6 +239,7 @@ function App() {
         checkAnswers={checkAnswers}
         changeOptions={changeOptions}
         gameMode={gameOptions.mode}
+        time={time}
       />
     );
   } else if (isGameSetUp && !questionsReady) {
