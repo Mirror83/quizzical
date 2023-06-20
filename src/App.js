@@ -24,7 +24,7 @@ function App() {
   const [gameOptions, setGameOptions] = React.useState({
     category: "any",
     difficulty: "any",
-    mode: gameConstants.TIMED_MODE,
+    mode: gameConstants.DEFAULT_MODE,
   });
 
   const [questions, setQuestions] = React.useState({
@@ -52,6 +52,8 @@ function App() {
     }
   }, [gameOptions, intervalObject, questionsReady]);
 
+  // This determines whether the getQuestions function has been called, preventing
+  // the effect responsible for this from being called twice
   React.useEffect(() => {
     if (isGameSetUp && !quizDone && !getQuestionsCalled.current) {
       getQuestionsCalled.current = true;
@@ -77,6 +79,7 @@ function App() {
     return trivia_db_url;
   }
 
+  // Gets questions and their metadata from the OTDB and reshapes them into question objects
   async function getQuestions() {
     try {
       const response = await fetch(urlSetup());
@@ -87,7 +90,9 @@ function App() {
           ...result.incorrect_answers,
           result.correct_answer,
         ].sort();
+
         const shiftedChoices = [];
+
         for (let i = 0; i < gameConstants.NUM_CHOICES; i++) {
           shiftedChoices.push({ id: i + 1, chosen: false, choice: choices[i] });
         }
@@ -181,7 +186,7 @@ function App() {
   React.useEffect(() => {
     if (
       gameOptions.mode === gameConstants.TIMED_MODE &&
-      time < 0 &&
+      time === 0 &&
       !quizDone
     ) {
       setTime(0);
@@ -218,6 +223,13 @@ function App() {
     }));
   }
 
+  function changeGameMode(newMode) {
+    setGameOptions((prevOptions) => ({
+      ...prevOptions,
+      mode: newMode,
+    }));
+  }
+
   function changeOptions() {
     setIsGameSetUp(false);
     playAgain();
@@ -231,6 +243,7 @@ function App() {
         gameOptions={gameOptions}
         changeGameCategory={changeGameCategory}
         changeGameDifficulty={changeGameDifficulty}
+        changeGameMode={changeGameMode}
         gameSetUpDone={gameSetUpDone}
       />
     );
