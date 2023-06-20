@@ -1,10 +1,11 @@
 import React from "react";
 
-import logo from "../logo.svg";
+// import logo from "../logo.svg";
 import blob from "../blob.svg";
 import blob2 from "../blob2.svg";
 
 import {setUpScreenAnimation} from "../animate_elements";
+import { gameConstants } from "../App";
 
 const categories = [
  "General Knowledge",
@@ -50,11 +51,11 @@ export default function GameSetup(props) {
         <img className="top-blob" src={blob} alt="blob"></img>
         <main>
             <div className="content-container">
-            <img
+            {/* <img
               className="logo"
               src={logo}
               alt="React logo"
-            ></img>
+            ></img> */}
             <form action=""
              onSubmit={
                 (e) => {
@@ -86,6 +87,19 @@ export default function GameSetup(props) {
                 onChange={(e) => props.changeGameCategory(e.target.value)}>
                     <option value="any">Any</option>
                     {optionElements}
+                </select></div>
+
+                <div>
+                    <label htmlFor="mode">Mode </label>
+                <select id="mode" 
+                name="mode" 
+                value={props.gameOptions.mode} 
+                onChange={(e) => {
+                    props.changeGameMode(Number(e.target.value));
+                    
+                    }}>
+                    <option value={gameConstants.DEFAULT_MODE}>Default</option>
+                    <option value={gameConstants.TIMED_MODE}>Timed</option>
                 </select></div>
                 <button>
                     Start quiz
