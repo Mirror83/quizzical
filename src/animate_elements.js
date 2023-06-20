@@ -1,12 +1,24 @@
 import gsap from "gsap";
+import { gameConstants } from "./App";
 
-function gameStartAnimation() {
-  const timeline = gsap.timeline();
+function gameStartAnimation(gameMode) {
+  const timeline = gsap.timeline({ id: "start" });
   timeline.fromTo(
     ".game .quiz",
     { opacity: 0, y: "random(50, -50)" },
     { opacity: 1, y: 0, duration: 3, ease: "elastic", stagger: 0.2 }
   );
+
+  if (gameMode === gameConstants.TIMED_MODE)
+    timeline.to(".timer", {
+      color: "red",
+      duration: gameConstants.DEFAULT_TIME_IN_SECONDS,
+      ease: `steps(${Math.floor(gameConstants.DEFAULT_TIME_IN_SECONDS / 5)})`,
+    });
+}
+
+function pauseTextColorAnimation() {
+  gsap.getById("start").pause();
 }
 
 function welcomeAnimation() {
@@ -38,4 +50,5 @@ export {
   welcomeAnimation,
   fadeInLoadingScreen,
   setUpScreenAnimation,
+  pauseTextColorAnimation,
 };
