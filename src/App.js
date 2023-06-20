@@ -60,6 +60,7 @@ function App() {
       // eslint-disable-next-line
       getQuestions();
     }
+    // eslint-disable-next-line
   }, [isGameSetUp, quizDone]);
 
   function urlSetup() {
@@ -194,6 +195,7 @@ function App() {
       intervalObject.current = null;
       checkAnswers();
     }
+    // eslint-disable-next-line
   }, [gameOptions, time, quizDone]);
 
   function playAgain() {
